@@ -1,0 +1,128 @@
+:root {
+  --cell-width: 100px;
+  --cell-height: 45px;
+}
+
+.App {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Add wrapper to control scrolling */
+.table-wrapper {
+  max-height: 80vh; /* Adjust as needed */
+  overflow-y: auto;
+  overflow-x: auto;
+  position: relative;
+}
+
+/* Ensure the table scrolls horizontally */
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* Table */
+.custom-table {
+  border-collapse: collapse;
+  width: auto;
+  table-layout: fixed;
+}
+
+/* Sticky Month Header */
+.custom-table thead tr.month-header th {
+  position: sticky;
+  top: 0;
+  /* background-color: #e0e0e0; */
+  z-index: 4; /* Ensure it stays above other headers */
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid #d9d9d9;
+}
+/* Alternating background colors for month headers */
+.custom-table thead tr.month-header th:nth-child(odd) {
+  background-color: #e0e0e0; /* Light Gray */
+}
+
+.custom-table thead tr.month-header th:nth-child(even) {
+  background-color: #cce5ff; /* Light Blue */
+}
+
+
+/* Sticky Days Row */
+.custom-table thead tr.day-header th {
+  position: sticky;
+  top: var(--cell-height);
+  background-color: #f2f2f2;
+  z-index: 3;
+}
+
+/* Table Headers & Cells */
+.custom-table th,
+.custom-table td {
+  padding: 0;
+  text-align: center;
+  width: var(--cell-width);
+  height: var(--cell-height);
+  min-width: var(--cell-width);
+  min-height: var(--cell-height);
+  max-width: var(--cell-width);
+  max-height: var(--cell-height);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* General Header Cell Styling */
+.custom-table .header-cell {
+  background-color: #f2f2f2;
+  border: 1px solid #d9d9d9;
+}
+
+/* Regular Cells */
+.custom-table .column-cell {
+  border: 1px solid #d9d9d9;
+  position: relative;
+}
+
+/* Hover Effect */
+.custom-table td:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+/* Selected Cell */
+.custom-table td.selected {
+  background-color: #A1E3F9;
+  border-color: #007bff;
+}
+
+/* Style for weekends */
+.weekend {
+  color: #007bff !important;
+  font-weight: bold;
+}
+
+/* Booking Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  width: calc(100% - 10px); /* Adjust width considering margin */
+  height: calc(100% - 10px); /* Adjust height considering margin */
+  background: rgba(30, 177, 113, 0.333);
+  color: rgb(0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+  white-space: nowrap;
+  overflow: hidden;
+
+  /* Rounded corners */
+  border-radius: 10px;
+
+  /* Margin on all sides */
+  margin: 5px;
+}
