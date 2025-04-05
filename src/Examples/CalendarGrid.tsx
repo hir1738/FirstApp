@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./CalendarGrid.css";
+
 const CalendarGrid: React.FC = () => {
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const today = new Date();
@@ -16,27 +17,36 @@ const CalendarGrid: React.FC = () => {
     dayName: string;
     date: number;
     fullDate: string;
+    timeOfDay: string;
   }[] = [];
   const monthHeaders: { name: string; days: number }[] = [];
 
   for (let i = 0; i < 3; i++) {
     const month = selectedMonth + i;
-    const monthName = new Date(currentYear, month, 1).toLocaleString(
-      "default",
-      { month: "long" }
-    );
+    const monthName = new Date(currentYear, month, 1).toLocaleString("default", {
+      month: "long",
+    });
     const lastDayOfMonth = new Date(currentYear, month + 1, 0).getDate();
 
-    monthHeaders.push({ name: monthName, days: lastDayOfMonth });
+    monthHeaders.push({ name: monthName, days: lastDayOfMonth * 2 });
 
     for (let day = 1; day <= lastDayOfMonth; day++) {
       const date = new Date(currentYear, month, day);
       const formattedDate = formatDate(date);
+      
       dates.push({
         month: monthName,
         dayName: dayNames[date.getDay()],
         date: day,
-        fullDate: formattedDate,
+        fullDate: `${formattedDate}/firstHalf`,
+        timeOfDay: "firstHalf",
+      });
+      dates.push({
+        month: monthName,
+        dayName: dayNames[date.getDay()],
+        date: day,
+        fullDate: `${formattedDate}/secondHalf`,
+        timeOfDay: "secondHalf",
       });
     }
   }
@@ -52,36 +62,29 @@ const CalendarGrid: React.FC = () => {
   const bookings = [
     {
       room: 1,
-      startDate: "2025/03/30",
-      endDate: "2025/04/06",
+      startDate: "2025/04/05/secondHalf",
+      endDate: "2025/04/06/firstHalf",
       userName: "Kishan",
       isPaid: "Not Paid",
     },
     {
       room: 3,
-      startDate: "2025/04/10",
-      endDate: "2025/04/12",
-      userName: "Joshi",
-      isPaid: "Paid",
-    },
-    {
-      room: 3,
-      startDate: "2025/04/12",
-      endDate: "2025/04/14",
+      startDate: "2025/04/10/firstHalf",
+      endDate: "2025/04/12/secondHalf",
       userName: "Joshi",
       isPaid: "Paid",
     },
     {
       room: 5,
-      startDate: "2025/04/05",
-      endDate: "2025/04/07",
+      startDate: "2025/04/05/secondHalf",
+      endDate: "2025/04/07/firstHalf",
       userName: "Jaman",
       isPaid: "Not Paid",
     },
     {
       room: 8,
-      startDate: "2025/03/31",
-      endDate: "2025/04/18",
+      startDate: "2025/03/31/firstHalf",
+      endDate: "2025/04/18/secondHalf",
       userName: "Jaman",
       isPaid: "Paid",
     },
@@ -104,7 +107,6 @@ const CalendarGrid: React.FC = () => {
         <div className="table-container">
           <table className="custom-table">
             <thead>
-              {/* Month Header Row */}
               <tr className="sticky-header month-header">
                 <th className="header-cell"></th>
                 {monthHeaders.map((month, index) => (
@@ -114,23 +116,35 @@ const CalendarGrid: React.FC = () => {
                 ))}
               </tr>
 
-              {/* Day + Date Header Row */}
               <tr className="sticky-header">
                 <th className="header-cell"></th>
+                {dates.map((date, index) =>
+                  date.timeOfDay === "firstHalf" ? (
+                    <th
+                      key={index}
+                      colSpan={2}
+                      className={`header-cell ${
+                        date.dayName === "Sat" || date.dayName === "Sun"
+                          ? "weekend"
+                          : ""
+                      }`}
+                    >
+                      {date.dayName} <br /> {date.date}
+                    </th>
+                  ) : null
+                )}
+              </tr>
+
+              {/* <tr className="sticky-header time-header">
+                <th className="header-cell"></th>
                 {dates.map((date, index) => (
-                  <th
-                    key={index}
-                    className={`header-cell ${
-                      date.dayName === "Sat" || date.dayName === "Sun"
-                        ? "weekend"
-                        : ""
-                    }`}
-                  >
-                    {date.dayName} <br /> {date.date}
+                  <th key={index} className="header-cell time-cell">
+                    {date.timeOfDay === "firstHalf" ? "1st" : "2nd"}
                   </th>
                 ))}
-              </tr>
+              </tr> */}
             </thead>
+
             <tbody>
               {rooms.map((roomNumber) => (
                 <tr key={roomNumber}>

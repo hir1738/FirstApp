@@ -29,6 +29,14 @@
   table-layout: fixed;
 }
 
+.custom-table tbody th.header-cell {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background-color: #f2f2f2;
+  border-right: 1px solid #d9d9d9;
+}
+
 /* Sticky Month Header */
 .custom-table thead tr.month-header th {
   position: sticky;
@@ -48,7 +56,6 @@
 .custom-table thead tr.month-header th:nth-child(even) {
   background-color: #cce5ff; /* Light Blue */
 }
-
 
 /* Sticky Days Row */
 .custom-table thead tr.day-header th {
@@ -94,7 +101,7 @@
 
 /* Selected Cell */
 .custom-table td.selected {
-  background-color: #A1E3F9;
+  background-color: #a1e3f9;
   border-color: #007bff;
 }
 
